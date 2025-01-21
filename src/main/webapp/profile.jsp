@@ -16,7 +16,7 @@
 <body>
 <div class="container mt-5">
     <h2>Your Profile</h2>
-    <form action="UpdateProfileServlet" method="post">
+    <form action="updateUserProfile" method="post">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control" id="username" name="username" value="current_username" required>

@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="product-list.jsp">Products</a>
+                    <a class="nav-link" href="view-product">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="cart.jsp">Cart</a>

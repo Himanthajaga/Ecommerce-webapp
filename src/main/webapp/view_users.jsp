@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="lk.ijse.ecomerce.UserDTO" %>
+<%@ page import="lk.ijse.ecomerce.dto.UserDTO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -36,7 +36,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="viewProducts">Products</a>
+                    <a class="nav-link" href="view-product">Products</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="category.jsp">Categories</a>
