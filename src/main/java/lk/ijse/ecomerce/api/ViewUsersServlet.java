@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ViewUsersServlet", urlPatterns = "/viewUsers")
-public class ViewUsersServlet extends HttpServlet {
+public class    ViewUsersServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 

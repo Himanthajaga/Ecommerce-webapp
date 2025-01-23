@@ -7,13 +7,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lk.ijse.ecomerce.dto.CartDTO;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.sql.DataSource;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name = "LoginServlet", urlPatterns = "/login")
 public class LoginServlet extends HttpServlet {
@@ -21,34 +22,61 @@ public class LoginServlet extends HttpServlet {
     private DataSource dataSource;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = req.getParameter("username");
-        String password = req.getParameter("password");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-            PreparedStatement stmt = connection.prepareStatement(sql);
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+            String sql = "SELECT user_id, password, role, active FROM users WHERE username = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, username);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    if (resultSet.next()) {
+                        String storedHash = resultSet.getString("password");
+                        String role = resultSet.getString("role");
+                        boolean active = resultSet.getBoolean("active");
+                        if (!active) {
+                            response.sendRedirect("login.jsp?error=Your account is suspended");
+                            return;
+                        }
+                        if (BCrypt.checkpw(password, storedHash)) {
+                            int userId = resultSet.getInt("user_id");
+                            HttpSession session = request.getSession();
+                            session.setAttribute("user_id", userId);
+                            session.setAttribute("role", role);
 
-            if (rs.next()) {
-                String role = rs.getString("role");
-                HttpSession session = req.getSession();
-                session.setAttribute("username", username);
-                session.setAttribute("role", role);
-
-                if ("admin".equals(role)) {
-                    resp.sendRedirect("admin_dashboard.jsp");
-                } else {
-                    resp.sendRedirect("customer_dashboard.jsp");
+                            if ("admin".equalsIgnoreCase(role)) {
+                                response.sendRedirect("admin_dashboard.jsp");
+                            } else if ("customer".equalsIgnoreCase(role)) {
+                                List<CartDTO> cart = new ArrayList<>();
+                                String cartSql = "SELECT product_id, quantity, price FROM cart WHERE user_id = ?";
+                                try (PreparedStatement cartStatement = connection.prepareStatement(cartSql)) {
+                                    cartStatement.setInt(1, userId);
+                                    try (ResultSet cartResultSet = cartStatement.executeQuery()) {
+                                        while (cartResultSet.next()) {
+                                            CartDTO item = new CartDTO();
+                                            item.setProduct_id(cartResultSet.getInt("product_id"));
+                                            item.setQuantity(cartResultSet.getInt("quantity"));
+                                            item.setPrice(cartResultSet.getDouble("price"));
+                                            cart.add(item);
+                                        }
+                                    }
+                                }
+                                session.setAttribute("cart", cart);
+                                response.sendRedirect("customerdashboard.jsp");
+                            } else {
+                                response.sendRedirect("login.jsp?error=Invalid role");
+                            }
+                        } else {
+                            response.sendRedirect("login.jsp?error=Invalid username or password");
+                        }
+                    } else {
+                        response.sendRedirect("login.jsp?error=Invalid username or password");
+                    }
                 }
-            } else {
-                resp.sendRedirect("login.jsp?error=Invalid username or password");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendRedirect("login.jsp?error=Failed to login");
+            throw new ServletException("Database error", e);
         }
     }
 }

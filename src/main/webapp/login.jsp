@@ -6,10 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 <div class="container mt-5">
     <h2>Login</h2>
+    <%
+        String message = (String) request.getParameter("message");
+        String error = (String) request.getParameter("error");
+    %>
+
+    <%
+        if (message != null){
+    %>
+    <div style="color: green">
+        <%= message %>
+    </div>
+    <%
+        }
+    %>
+    <%
+        if (error != null){
+    %>
+    <div style="color: red">
+        <%= error %>
+    </div>
+    <%
+        }
+    %>
     <form action="login" method="post">
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>

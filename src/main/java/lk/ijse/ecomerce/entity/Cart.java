@@ -12,4 +12,6 @@ public class Cart {
     private int user_id;
     private int product_id;
     private int quantity;
+    private double price;
+    private String status;
 }

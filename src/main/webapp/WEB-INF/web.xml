@@ -18,6 +18,14 @@
         <url-pattern>/view-product</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.ProductServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/customerproducts</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>EditproductServlet</servlet-name>
         <servlet-class>lk.ijse.ecomerce.api.EditproductServlet</servlet-class>
     </servlet>
@@ -91,4 +99,48 @@
         <url-pattern>/delete-category</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>CartServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.CartServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartServlet</servlet-name>
+        <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/orders</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.CheckoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckoutServlet</servlet-name>
+        <url-pattern>/checkout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.OrderHistoryServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderHistoryServlet</servlet-name>
+        <url-pattern>/order-history</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ViewOrdersServlet</servlet-name>
+        <servlet-class>lk.ijse.ecomerce.api.ViewOrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewOrdersServlet</servlet-name>
+        <url-pattern>/viewOrders</url-pattern>
+    </servlet-mapping>
 </web-app>

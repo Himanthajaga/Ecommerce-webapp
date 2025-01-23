@@ -13,25 +13,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-@WebServlet(name = "UpdateUserStatusServlet", urlPatterns = "/updateUserStatus")
+@WebServlet(name = "UpdateUserStatusServlet", value = "/updateUserStatus")
 public class UpdateUserStatusServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        int userId = Integer.parseInt(req.getParameter("user_id"));
-        int isActive = Integer.parseInt(req.getParameter("is_active"));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int userId = Integer.parseInt(request.getParameter("user_id"));
+        boolean isActive = Boolean.parseBoolean(request.getParameter("is_active"));
 
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET active = ? WHERE user_id = ?");
-            stmt.setInt(1, isActive);
-            stmt.setInt(2, userId);
-            stmt.executeUpdate();
-            resp.sendRedirect("viewUsers");
+            String sql = "UPDATE users SET active = ? WHERE user_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setBoolean(1, isActive);
+                statement.setInt(2, userId);
+                statement.executeUpdate();
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-            resp.sendRedirect("admin_dashboard.jsp?error=Failed to update user status");
+            throw new ServletException("Database error", e);
         }
+
+        response.sendRedirect("viewUsers");
     }
 }

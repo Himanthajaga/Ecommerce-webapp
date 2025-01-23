@@ -5,7 +5,6 @@
 <head>
     <title>User List</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<%--    <link rel="stylesheet" type="text/css" href="css/style.css">--%>
     <style>
         table {
             width: 100%;
@@ -47,6 +46,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="viewUsers">Users</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="logout.jsp">Logout</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -73,16 +75,16 @@
             for (UserDTO user : userDataList){
         %>
         <tr>
-            <td><%= user.getUser_id() %></td>
-            <td><%= user.getUser_name() %></td>
+            <td><%= user.getUserId() %></td>
+            <td><%= user.getUserName() %></td>
             <td><%= user.getEmail() %></td>
             <td><%= user.getRole() %></td>
-            <td><%= user.getActive() %></td>
+            <td><%= user.isActive() %></td>
             <td>
                 <form action="updateUserStatus" method="post">
-                    <input type="hidden" name="user_id" value="<%= user.getUser_id() %>">
-                    <input type="hidden" name="is_active" value="<%= user.getActive() == 1 ? 0 : 1 %>">
-                    <button type="submit" class="btn btn-primary"><%= user.getActive() == 1 ? "Deactivate" : "Activate" %></button>
+                    <input type="hidden" name="user_id" value="<%= user.getUserId() %>">
+                    <input type="hidden" name="is_active" value="<%= !user.isActive() %>">
+                    <button type="submit" class="btn btn-primary"><%= user.isActive() ? "Deactivate" : "Activate" %></button>
                 </form>
             </td>
         </tr>
