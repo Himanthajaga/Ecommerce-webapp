@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
             String sql = "SELECT user_id, password, role, active FROM users WHERE username = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setString(1, username);
+
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
                         String storedHash = resultSet.getString("password");
@@ -43,6 +44,8 @@ public class LoginServlet extends HttpServlet {
                             int userId = resultSet.getInt("user_id");
                             HttpSession session = request.getSession();
                             session.setAttribute("user_id", userId);
+                            session.setAttribute("loggedInUserId", String.valueOf(userId));
+                            session.setAttribute("loggedInAdminId", String.valueOf(userId));
                             session.setAttribute("role", role);
 
                             if ("admin".equalsIgnoreCase(role)) {

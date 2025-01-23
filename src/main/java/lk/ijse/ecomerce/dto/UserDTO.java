@@ -1,5 +1,6 @@
 package lk.ijse.ecomerce.dto;
 
+import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class UserDTO {
     private int userId;
+    private String formatted_user_id;
     private String userName;
     private String password;
     private String email;
@@ -29,6 +31,33 @@ public class UserDTO {
         this.password = password;
     }
 
+    public UserDTO(int userId, String userName, String password, String email, String role, boolean active) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+    }
+
+    public UserDTO(String userName, String email, String role, boolean active, int userId) {
+        this.userName = userName;
+        this.email = email;
+        this.role = role;
+        this.active = active;
+        this.userId = userId;
+    }
+
+    public UserDTO(int userId, String userName, String email, String role) {
+        this.userId = userId;
+        this.userName = userName;
+        this.email = email;
+        this.role = role;
+    }
+
+    public String toJson() {
+        return new Gson().toJson(this);
+    }
     public UserDTO(String userName, String password, String email, String role, boolean active) {
         this.userName = userName;
         this.password = password;

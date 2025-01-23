@@ -38,7 +38,7 @@
                     <a class="nav-link" href="view-product">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="category.jsp">Categories</a>
+                    <a class="nav-link" href="view-category">Categories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="viewOrders">Orders</a>
@@ -48,6 +48,9 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="logout.jsp">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="admin">profile</a>
                 </li>
             </ul>
         </div>

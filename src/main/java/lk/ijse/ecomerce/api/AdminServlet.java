@@ -17,35 +17,35 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "CustomerServlet", value = "/customer")
-public class CustomerServlet extends HttpServlet {
+@WebServlet(name = "AdminServlet", value = "/admin")
+public class AdminServlet extends HttpServlet {
     @Resource(name = "java:comp/env/jdbc/pool")
     private DataSource dataSource;
 
-    private static final Logger LOGGER = Logger.getLogger(CustomerServlet.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AdminServlet.class.getName());
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String loggedInUserId = (String) request.getSession().getAttribute("loggedInUserId");
-        if (loggedInUserId == null) {
+        String loggedInAdminId = (String) request.getSession().getAttribute("loggedInAdminId");
+        if (loggedInAdminId == null) {
             response.sendRedirect("login.jsp?error=Please log in first");
             return;
         }
 
-        UserDTO customer = null;
+        UserDTO admin = null;
 
         try (Connection connection = dataSource.getConnection()) {
             String sql = "SELECT user_id, username, email, role, active FROM users WHERE user_id = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setInt(1, Integer.parseInt(loggedInUserId));
+                statement.setInt(1, Integer.parseInt(loggedInAdminId));
                 try (ResultSet resultSet = statement.executeQuery()) {
                     if (resultSet.next()) {
-                        customer = new UserDTO();
-                        customer.setUserId(resultSet.getInt("user_id"));
-                        customer.setUserName(resultSet.getString("username"));
-                        customer.setEmail(resultSet.getString("email"));
-                        customer.setRole(resultSet.getString("role"));
-                        customer.setActive(resultSet.getBoolean("active"));
+                        admin = new UserDTO();
+                        admin.setUserId(resultSet.getInt("user_id"));
+                        admin.setUserName(resultSet.getString("username"));
+                        admin.setEmail(resultSet.getString("email"));
+                        admin.setRole(resultSet.getString("role"));
+                        admin.setActive(resultSet.getBoolean("active"));
                     }
                 }
             }
@@ -53,8 +53,8 @@ public class CustomerServlet extends HttpServlet {
             throw new ServletException("Database error", e);
         }
 
-        request.setAttribute("customer", customer);
-        request.getRequestDispatcher("update-customer.jsp").forward(request, response);
+        request.setAttribute("admin", admin);
+        request.getRequestDispatcher("update-admin.jsp").forward(request, response);
     }
 
     @Override
@@ -62,19 +62,16 @@ public class CustomerServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         String email = request.getParameter("email");
         String role = request.getParameter("role");
-        boolean active = Boolean.parseBoolean(String.valueOf(request.getParameter("active")));
         int userId = Integer.parseInt(request.getParameter("userId"));
 
-        UserDTO user = new UserDTO(userName, email, role, active, userId);
+        UserDTO admin = new UserDTO(userId, userName, email, role);
         try (Connection connection = dataSource.getConnection()) {
-            String sql = "UPDATE users SET username = ?,  email = ?, role = ? WHERE user_id = ?";
+            String sql = "UPDATE users SET username = ?, email = ?, role = ? WHERE user_id = ?";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setString(1, user.getUserName());
-
-                statement.setString(2, user.getEmail());
-                statement.setString(3, user.getRole());
-//                statement.setBoolean(4, user.isActive());
-                statement.setInt(4, user.getUserId());
+                statement.setString(1, admin.getUserName());
+                statement.setString(2, admin.getEmail());
+                statement.setString(3, admin.getRole());
+                statement.setInt(4, admin.getUserId());
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
@@ -82,6 +79,6 @@ public class CustomerServlet extends HttpServlet {
             throw new ServletException("Database error", e);
         }
 
-        response.sendRedirect("customer");
+        response.sendRedirect("admin");
     }
 }

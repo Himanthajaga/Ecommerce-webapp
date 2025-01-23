@@ -29,7 +29,7 @@
                         <a class="nav-link" href="order-history">Order History</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="update-customer.jsp">Profile</a>
+                        <a class="nav-link" href="customer">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.jsp">Logout</a>
