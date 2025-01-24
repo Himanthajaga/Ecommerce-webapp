@@ -139,7 +139,7 @@
                     <div class="card-body">
                         <h5 class="card-title"><%= product.getName() %></h5>
                         <p class="card-text">Price: $<%= product.getPrice() %></p>
-                        <p class="card-text"><%= product.getDescription() %></p>
+                        <p class="card-text description-text"><%= product.getDescription() %></p>
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="edit-product?product_id=<%= product.getProduct_id() %>" class="btn btn-danger">Edit</a>
                             <form action="delete-product" method="post" style="display:inline;">

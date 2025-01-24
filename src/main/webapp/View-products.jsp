@@ -134,7 +134,7 @@
                 <div class="card-body">
                     <h5 class="card-title"><%= product.getName() %></h5>
                     <p class="card-text">Price: $<%= product.getPrice() %></p>
-                    <p class="card-text"><%= product.getDescription() %></p>
+                    <p class="card-text description-text"><%= product.getDescription() %></p>
                     <div class="d-flex justify-content-between align-items-center">
                         <form action="add-to-cart" method="post">
                             <input type="hidden" name="product_id" value="<%= product.getProduct_id() %>">
