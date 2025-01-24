@@ -69,11 +69,11 @@
             <div class="col-md-4">
                 <h5 class="text-primary">Quick Links</h5>
                 <ul class="list-unstyled">
-                    <li><a href="customerdashboard.jsp" class="text-white">Home</a></li>
-                    <li><a href="customerproducts" class="text-white">Browse Products</a></li>
-                    <li><a href="shopping-cart.jsp" class="text-white">Shopping Cart</a></li>
-                    <li><a href="order-history" class="text-white">Order History</a></li>
-                    <li><a href="customer" class="text-white">Profile</a></li>
+                    <li><a href="view-product" class="text-white">Products</a></li>
+                    <li><a href="view-category" class="text-white">Categories</a></li>
+                    <li><a href="viewOrders" class="text-white">Orders</a></li>
+                    <li><a href="viewUsers" class="text-white">Users</a></li>
+                    <li><a href="admin" class="text-white">Profile</a></li>
                 </ul>
             </div>
             <div class="col-md-4">

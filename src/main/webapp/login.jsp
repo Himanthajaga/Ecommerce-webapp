@@ -94,7 +94,7 @@
     <%
         if (message != null){
     %>
-    <div style="color: green">
+    <div class="text-center fs-3" style="color: green">
         <%= message %>
     </div>
     <%
@@ -103,7 +103,7 @@
     <%
         if (error != null){
     %>
-    <div style="color: red">
+    <div class="text-center fs-3" style="color: red">
         <%= error %>
     </div>
     <%

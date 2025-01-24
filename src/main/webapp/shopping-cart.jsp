@@ -139,7 +139,7 @@
             <td>$<%= item.getPrice() %></td>
             <td>$<%= item.getTotal() %></td>
             <td>
-<%--                <a href="update_cart.jsp?product_id=<%= item.getProductId() %>" class="btn btn-primary">Update</a>--%>
+
     <a href="remove-from-cart?product_id=<%= item.getProduct_id() %>" class="btn btn-danger">Remove</a>
             </td>
         </tr>
