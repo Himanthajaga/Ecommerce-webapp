@@ -24,6 +24,8 @@ public class CartDTO{
     @Setter
     private double price;
     private String status;
+    private String image_url;
+    private String product_name;
     // Assuming price is needed to calculate total
 
     public double getTotal() {

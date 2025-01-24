@@ -14,4 +14,6 @@ public class Cart {
     private int quantity;
     private double price;
     private String status;
+    private String image_url;
+    private String product_name;
 }

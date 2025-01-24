@@ -57,7 +57,8 @@ public class OrderHistoryServlet extends HttpServlet {
                                         int productId = orderItemResultSet.getInt("product_id");
                                         int quantity = orderItemResultSet.getInt("quantity");
                                         double price = orderItemResultSet.getDouble("price");
-                                        orderItems.add(new OrderDetailDTO(orderId, productId, quantity, price));
+                                        String productName = orderItemResultSet.getString("product_name");
+                                        orderItems.add(new OrderDetailDTO(orderId, productId, quantity, price, productName));
                                     }
                                 }
                             }

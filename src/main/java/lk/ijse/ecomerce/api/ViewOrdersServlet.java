@@ -41,7 +41,7 @@ public class ViewOrdersServlet extends HttpServlet {
                         order.setDiscount(resultSet.getDouble("discount"));
 
                         // Retrieve order items
-                        String itemSql = "SELECT product_id, quantity, price FROM order_items WHERE order_id = ?";
+                        String itemSql = "SELECT product_id, quantity, price,product_name FROM order_items WHERE order_id = ?";
                         try (PreparedStatement itemStatement = connection.prepareStatement(itemSql)) {
                             itemStatement.setInt(1, order.getOrder_id());
                             try (ResultSet itemResultSet = itemStatement.executeQuery()) {
@@ -51,6 +51,7 @@ public class ViewOrdersServlet extends HttpServlet {
                                     item.setProductId(itemResultSet.getInt("product_id"));
                                     item.setQuantity(itemResultSet.getInt("quantity"));
                                     item.setPrice(itemResultSet.getDouble("price"));
+                                    item.setProductName(itemResultSet.getString("product_name"));
                                     orderItems.add(item);
                                 }
                                 order.setOrderItems(orderItems);

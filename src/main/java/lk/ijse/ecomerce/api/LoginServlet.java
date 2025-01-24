@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
                                 response.sendRedirect("admin_dashboard.jsp");
                             } else if ("customer".equalsIgnoreCase(role)) {
                                 List<CartDTO> cart = new ArrayList<>();
-                                String cartSql = "SELECT product_id, quantity, price FROM cart WHERE user_id = ?";
+                                String cartSql = "SELECT product_id, quantity, price,image_url,product_name FROM cart WHERE user_id = ?";
                                 try (PreparedStatement cartStatement = connection.prepareStatement(cartSql)) {
                                     cartStatement.setInt(1, userId);
                                     try (ResultSet cartResultSet = cartStatement.executeQuery()) {
@@ -61,6 +61,8 @@ public class LoginServlet extends HttpServlet {
                                             item.setProduct_id(cartResultSet.getInt("product_id"));
                                             item.setQuantity(cartResultSet.getInt("quantity"));
                                             item.setPrice(cartResultSet.getDouble("price"));
+                                            item.setImage_url(cartResultSet.getString("image_url"));
+                                            item.setProduct_name(cartResultSet.getString("product_name"));
                                             cart.add(item);
                                         }
                                     }

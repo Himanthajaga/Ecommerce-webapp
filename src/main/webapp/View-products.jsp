@@ -140,6 +140,8 @@
                             <input type="hidden" name="product_id" value="<%= product.getProduct_id() %>">
                             <input type="hidden" name="quantity" value="1">
                             <input type="hidden" name="price" value="<%= product.getPrice() %>">
+                            <input type="hidden" name="image_url"value="<%=product.getImage_url()%>">
+                            <input type="hidden" name="product_name"value="<%=product.getName()%>">
                             <button type="submit" class="btn btn-success">Add to Cart</button>
                         </form>
                     </div>

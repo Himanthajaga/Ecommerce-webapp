@@ -23,6 +23,9 @@ public class AddToCartServlet extends HttpServlet {
         int productId = Integer.parseInt(request.getParameter("product_id"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         double price = Double.parseDouble(request.getParameter("price"));
+        String image_url = request.getParameter("image_url");
+        String name = request.getParameter("product_name");
+        System.out.println("Image URL: " + image_url);
 
         if (userId != null) {
             // Add item to session cart
@@ -34,17 +37,22 @@ public class AddToCartServlet extends HttpServlet {
             item.setProduct_id(productId);
             item.setQuantity(quantity);
             item.setPrice(price);
+            item.setImage_url(image_url);
+            item.setProduct_name(name);
             cart.add(item);
             session.setAttribute("cart", cart);
 
             // Save item to database cart table
             try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "Ijse@123")) {
-                String sql = "INSERT INTO cart (user_id, product_id, quantity, price, status) VALUES (?, ?, ?, ?, 'not paid')";
+                String sql = "INSERT INTO cart (user_id, product_id, quantity, price, status,image_url,product_name) VALUES (?, ?, ?, ?, 'paid', ?,?)";
                 try (PreparedStatement statement = connection.prepareStatement(sql)) {
                     statement.setInt(1, userId);
                     statement.setInt(2, productId);
                     statement.setInt(3, quantity);
                     statement.setDouble(4, price);
+                    statement.setString(5, image_url);
+                    statement.setString(6, name);
+                    System.out.println("Executing SQL: " + statement);
                     statement.executeUpdate();
                 }
             } catch (SQLException e) {
@@ -70,6 +78,8 @@ public class AddToCartServlet extends HttpServlet {
         cartItem.setProduct_id(product.getProduct_id());
         cartItem.setQuantity(1); // Default quantity
         cartItem.setPrice(product.getPrice());
+        cartItem.setImage_url(product.getImage_url());
+        cartItem.setProduct_name(product.getName());
         cart.add(cartItem);
         session.setAttribute("cart", cart);
         response.sendRedirect("shopping-cart.jsp");
@@ -100,6 +110,8 @@ public class AddToCartServlet extends HttpServlet {
                 product.setName(resultSet.getString("name"));
                 product.setDescription(resultSet.getString("description"));
                 product.setPrice(resultSet.getDouble("price"));
+                product.setImage_url(resultSet.getString("image_url"));
+                product.setName(resultSet.getString("name"));
                 // Set other product fields as needed
             }
         } catch (SQLException e) {

@@ -83,7 +83,7 @@
                     <%
                         for (OrderDetailDTO item : order.getOrderItems()){
                     %>
-                    <li>Product ID: <%= item.getProductId() %>, Quantity: <%= item.getQuantity() %>, Price: <%= item.getPrice() %></li>
+                    <li>Product ID: <%= item.getProductId() %>,Product Name: <%=item.getProductName() %>, <%= item.getQuantity() %>, Price: <%= item.getPrice() %></li>
                     <%
                         }
                     %>

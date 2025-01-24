@@ -118,7 +118,8 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Product ID</th>
+            <th>Product Image</th>
+            <th>Product Name</th>
             <th>Quantity</th>
             <th>Price</th>
             <th>Total</th>
@@ -132,7 +133,8 @@
                 for (CartDTO item : cart) {
         %>
         <tr>
-            <td><%= item.getProduct_id() %></td>
+            <td><img src="<%= item.getImage_url() %>" alt="Product Image" width="100" height="100"></td>
+            <td><%= item.getProduct_name() %></td>
             <td><%= item.getQuantity() %></td>
             <td>$<%= item.getPrice() %></td>
             <td>$<%= item.getTotal() %></td>

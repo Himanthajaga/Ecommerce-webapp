@@ -28,7 +28,9 @@ public class CartDAOImpl implements CartDAO {
                         rs.getInt("product_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("price"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("image_url"),
+                        rs.getString("product_name")
                 );
                 cartList.add(cart);
             }
@@ -91,7 +93,9 @@ public class CartDAOImpl implements CartDAO {
                         rs.getInt("product_id"),
                         rs.getInt("quantity"),
                         rs.getDouble("price"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        rs.getString("image_url"),
+                        rs.getString("product_name")
                 );
             }
         }

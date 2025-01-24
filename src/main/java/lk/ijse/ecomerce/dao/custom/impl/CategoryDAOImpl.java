@@ -14,7 +14,17 @@ public class CategoryDAOImpl implements CategoryDAO {
     public CategoryDAOImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
-
+    public List<Integer> getAllCategoryIds() throws SQLException {
+        List<Integer> categoryIds = new ArrayList<>();
+        try (Connection connection = dataSource.getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT category_id FROM categories");
+            while (rs.next()) {
+                categoryIds.add(rs.getInt("category_id"));
+            }
+        }
+        return categoryIds;
+    }
     @Override
     public ArrayList<Category> getAll() throws SQLException, ClassNotFoundException {
         List<Category> categoryList = new ArrayList<>();
@@ -42,11 +52,20 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public boolean add(Category category) throws SQLException, ClassNotFoundException {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO categories (name, description) VALUES (?, ?)");
+            // Get the maximum existing category ID
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT MAX(category_id) FROM categories");
+            int nextId = 1;
+            if (rs.next()) {
+                nextId = rs.getInt(1) + 1;
+            }
 
-            stmt.setString(1, category.getName());
-            stmt.setString(2, category.getDescription());
-            return stmt.executeUpdate() > 0;
+            // Insert the new category with the next ID
+            PreparedStatement insertStmt = connection.prepareStatement("INSERT INTO categories (category_id, name, description) VALUES (?, ?, ?)");
+            insertStmt.setInt(1, nextId);
+            insertStmt.setString(2, category.getName());
+            insertStmt.setString(3, category.getDescription());
+            return insertStmt.executeUpdate() > 0;
         }
     }
 
@@ -74,9 +93,16 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public boolean delete(String id) throws SQLException, ClassNotFoundException {
         try (Connection connection = dataSource.getConnection()) {
-            PreparedStatement stmt = connection.prepareStatement("DELETE FROM categories WHERE category_id=?");
-            stmt.setString(1, id);
-            boolean isDeleted = stmt.executeUpdate() > 0;
+            // First, delete all products that reference this category
+            PreparedStatement deleteProductsStmt = connection.prepareStatement("DELETE FROM products WHERE category_id=?");
+            deleteProductsStmt.setString(1, id);
+            deleteProductsStmt.executeUpdate();
+
+            // Then, delete the category
+            PreparedStatement deleteCategoryStmt = connection.prepareStatement("DELETE FROM categories WHERE category_id=?");
+            deleteCategoryStmt.setString(1, id);
+            boolean isDeleted = deleteCategoryStmt.executeUpdate() > 0;
+
             if (isDeleted) {
                 // Check if there are no more categories
                 Statement checkStmt = connection.createStatement();

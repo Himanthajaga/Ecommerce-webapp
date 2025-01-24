@@ -29,6 +29,7 @@ public class PurchaseOrderServlet extends HttpServlet {
         String discountStr = request.getParameter("discount");
         double discount = discountStr != null ? Double.parseDouble(discountStr) : 0;
         String[] selectedProductIds = request.getParameterValues("product_id");
+        String product_name = request.getParameter("product_name");
         List<CartDTO> cart = (List<CartDTO>) session.getAttribute("cart");
 
         LOGGER.log(Level.INFO, "User ID: {0}, Order Date: {1}, Total Amount: {2}, Status: {3}, Payment Method: {4}, Discount: {5}",
@@ -60,7 +61,7 @@ public class PurchaseOrderServlet extends HttpServlet {
                     orderId = generatedKeys.getInt(1);
                 }
 
-                String orderItemSql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+                String orderItemSql = "INSERT INTO order_items (order_id, product_id, quantity, price,product_name) VALUES (?, ?, ?, ?, ?)";
                 orderItemStatement = connection.prepareStatement(orderItemSql);
                 for (CartDTO item : cart) {
                     for (String selectedProductId : selectedProductIds) {
@@ -69,6 +70,7 @@ public class PurchaseOrderServlet extends HttpServlet {
                             orderItemStatement.setInt(2, item.getProduct_id());
                             orderItemStatement.setInt(3, item.getQuantity());
                             orderItemStatement.setDouble(4, item.getPrice());
+                            orderItemStatement.setString(5, item.getProduct_name());
                             orderItemStatement.addBatch();
                         }
                     }

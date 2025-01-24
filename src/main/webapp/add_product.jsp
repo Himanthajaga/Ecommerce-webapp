@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet"href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-dark border-2 mb-4 position-fixed top-0 z-3 w-100">
@@ -47,7 +47,7 @@
         </div>
     </div>
 </nav>
-<div class="container mt-5 pt-5  fade-in" style="color: #0b3ec1; transition: color 0.5s;">
+<div class="container mt-5 pt-5 fade-in" style="color: #0b3ec1; transition: color 0.5s;">
     <h2 class="text-center">Add Product</h2>
     <form action="add-product" method="post">
         <div class="mb-3">
@@ -106,12 +106,5 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
-    function updateCategoryId() {
-        var categorySelect = document.getElementById("categorySelect");
-        var categoryId = categorySelect.options[categorySelect.selectedIndex].value;
-        document.getElementById("category_id").value = categoryId;
-    }
-</script>
 </body>
 </html>

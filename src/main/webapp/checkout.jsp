@@ -73,6 +73,8 @@
             <tr>
                 <th>Select</th>
                 <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Product Image</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total</th>
@@ -91,6 +93,8 @@
             <tr class="item-row">
                 <td><input type="checkbox" class="select-item" name="product_id" value="<%= item.getProduct_id() %>" onclick="updateTotal()"></td>
                 <td><%= item.getProduct_id() %></td>
+                <td><%= item.getProduct_name() %></td>
+                <td><img src="<%= item.getImage_url() %>" alt="Product Image" width="100" height="100"></td>
                 <td><input type="number" name="quantity_<%= item.getProduct_id() %>" value="<%= item.getQuantity() %>" min="1" class="quantity-input" oninput="updateTotal()"></td>
                 <td class="price">$<%= item.getPrice() %></td>
                 <td class="item-total">$<%= itemTotal %></td>
