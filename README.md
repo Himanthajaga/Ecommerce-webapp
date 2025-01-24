@@ -67,7 +67,7 @@ This is a fully functional e-commerce web application built using Java EE and JS
 ![Admin Product View 2](src/main/webapp/ScreenShots/adminproduct222.PNG)
 ![Admin Update Profile Page](src/main/webapp/ScreenShots/adminupdate.PNG)
 ![Admin Users View Page](src/main/webapp/ScreenShots/adminusersview.PNG)
-![Category Page 1](src/main/webapp/ScreenShots/category1.PNG)
+![Category Page 1](src/main/webapp/ScreenShots/category111.PNG)
 ![Customer Orders View](src/main/webapp/ScreenShots/cusorderhisview.PNG)
 ![Customer browsing Products  Page](src/main/webapp/ScreenShots/customerbrowseproductss.PNG)
 ![Customer Dashboard](src/main/webapp/ScreenShots/customerdash.PNG)
