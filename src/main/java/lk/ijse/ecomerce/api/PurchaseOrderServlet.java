@@ -26,14 +26,12 @@ public class PurchaseOrderServlet extends HttpServlet {
         String totalAmount = request.getParameter("totalAmount");
         String status = request.getParameter("status");
         String paymentMethod = request.getParameter("paymentMethod");
-        String discountStr = request.getParameter("discount");
-        double discount = discountStr != null ? Double.parseDouble(discountStr) : 0;
         String[] selectedProductIds = request.getParameterValues("product_id");
         String product_name = request.getParameter("product_name");
         List<CartDTO> cart = (List<CartDTO>) session.getAttribute("cart");
 
-        LOGGER.log(Level.INFO, "User ID: {0}, Order Date: {1}, Total Amount: {2}, Status: {3}, Payment Method: {4}, Discount: {5}",
-                new Object[]{userIdStr, orderDate, totalAmount, status, paymentMethod, discount});
+        LOGGER.log(Level.INFO, "User ID: {0}, Order Date: {1}, Total Amount: {2}, Status: {3}, Payment Method: {4}",
+                new Object[]{userIdStr, orderDate, totalAmount, status, paymentMethod});
 
         if (cart != null && selectedProductIds != null && userIdStr != null && orderDate != null && totalAmount != null && status != null && paymentMethod != null) {
             Connection connection = null;
@@ -45,14 +43,13 @@ public class PurchaseOrderServlet extends HttpServlet {
                 connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "Ijse@123");
                 connection.setAutoCommit(false);
 
-                String orderSql = "INSERT INTO orders (user_id, order_date, total_amount, status, payment_method, discount) VALUES (?, ?, ?, ?, ?, ?)";
+                String orderSql = "INSERT INTO orders (user_id, order_date, total_amount, status, payment_method) VALUES (?, ?, ?, ?, ?)";
                 orderStatement = connection.prepareStatement(orderSql, Statement.RETURN_GENERATED_KEYS);
                 orderStatement.setString(1, userIdStr);
                 orderStatement.setString(2, orderDate);
                 orderStatement.setString(3, totalAmount);
                 orderStatement.setString(4, status);
                 orderStatement.setString(5, paymentMethod);
-                orderStatement.setDouble(6, discount);
                 orderStatement.executeUpdate();
 
                 ResultSet generatedKeys = orderStatement.getGeneratedKeys();
@@ -66,9 +63,10 @@ public class PurchaseOrderServlet extends HttpServlet {
                 for (CartDTO item : cart) {
                     for (String selectedProductId : selectedProductIds) {
                         if (item.getProduct_id() == Integer.parseInt(selectedProductId)) {
+                            int quantity = Integer.parseInt(request.getParameter("quantity_"+selectedProductId));
                             orderItemStatement.setInt(1, orderId);
                             orderItemStatement.setInt(2, item.getProduct_id());
-                            orderItemStatement.setInt(3, item.getQuantity());
+                            orderItemStatement.setInt(3, quantity);
                             orderItemStatement.setDouble(4, item.getPrice());
                             orderItemStatement.setString(5, item.getProduct_name());
                             orderItemStatement.addBatch();

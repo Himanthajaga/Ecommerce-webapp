@@ -46,7 +46,7 @@ public class OrderHistoryServlet extends HttpServlet {
                             double totalAmount = orderResultSet.getDouble("total_amount");
                             String status = orderResultSet.getString("status");
                             String paymentMethod = orderResultSet.getString("payment_method");
-                            double discount = orderResultSet.getDouble("discount");
+//                            double discount = orderResultSet.getDouble("discount");
 
                             List<OrderDetailDTO> orderItems = new ArrayList<>();
                             String orderItemSql = "SELECT * FROM order_items WHERE order_id = ?";
@@ -63,7 +63,7 @@ public class OrderHistoryServlet extends HttpServlet {
                                 }
                             }
 
-                            orders.add(new OrderDTO(orderId, userId, orderDate, totalAmount, status, paymentMethod, discount, orderItems));
+                            orders.add(new OrderDTO(orderId, userId, orderDate, totalAmount, status, paymentMethod, orderItems));
                         }
                         LOGGER.log(Level.INFO, "Orders retrieved: {0}", orders.size());
                         request.setAttribute("Allorders", orders);

@@ -58,7 +58,7 @@ public class CheckoutServlet extends HttpServlet {
                         if (generatedKeys.next()) {
                             int orderId = generatedKeys.getInt(1);
 
-                            String insertOrderDetailsSql = "INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
+                            String insertOrderDetailsSql = "INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)";
                             try (PreparedStatement orderDetailsStatement = connection.prepareStatement(insertOrderDetailsSql)) {
                                 for (String productIdStr : productIds) {
                                     int productId = Integer.parseInt(productIdStr);

@@ -27,7 +27,7 @@ public class ViewOrdersServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<OrderDTO> orders = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommerce", "root", "Ijse@123")) {
-            String sql = "SELECT order_id, user_id, order_date, total_amount, status, payment_method, discount FROM orders";
+            String sql = "SELECT order_id, user_id, order_date, total_amount, status, payment_method  FROM orders";
             try (PreparedStatement statement = connection.prepareStatement(sql)) {
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
@@ -38,7 +38,7 @@ public class ViewOrdersServlet extends HttpServlet {
                         order.setTotalAmount(resultSet.getDouble("total_amount"));
                         order.setStatus(resultSet.getString("status"));
                         order.setPaymentMethod(resultSet.getString("payment_method"));
-                        order.setDiscount(resultSet.getDouble("discount"));
+//                        order.setDiscount(resultSet.getDouble("discount"));
 
                         // Retrieve order items
                         String itemSql = "SELECT product_id, quantity, price,product_name FROM order_items WHERE order_id = ?";

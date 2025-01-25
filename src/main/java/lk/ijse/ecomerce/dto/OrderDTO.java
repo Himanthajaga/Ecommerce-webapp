@@ -20,7 +20,6 @@ private String order_date;
 private double totalAmount;
 private String status;
     private String paymentMethod;
-    private double discount;
     private List<OrderDetailDTO> orderItems = new ArrayList<>();
 
     public OrderDTO(int id, int userId, Timestamp orderDate, double total, String status) {
@@ -40,5 +39,15 @@ private String status;
         this.totalAmount = total;
         this.status = status;
         this.paymentMethod = paymentMethod;
+    }
+
+    public OrderDTO(int orderId, Integer userId, String orderDate, double totalAmount, String status, String paymentMethod, List<OrderDetailDTO> orderItems) {
+        this.order_id = orderId;
+        this.user_id = userId;
+        this.order_date = orderDate;
+        this.totalAmount = totalAmount;
+        this.status = status;
+        this.paymentMethod = paymentMethod;
+        this.orderItems = orderItems;
     }
 }

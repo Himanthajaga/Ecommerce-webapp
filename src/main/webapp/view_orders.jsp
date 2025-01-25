@@ -63,7 +63,6 @@
             <th>Total Amount</th>
             <th>Status</th>
             <th>Payment Method</th>
-            <th>Discount</th>
             <th>Items</th>
         </tr>
         </thead>
@@ -77,7 +76,6 @@
             <td><%= order.getTotalAmount() %></td>
             <td><%= order.getStatus() %></td>
             <td><%= order.getPaymentMethod() %></td>
-            <td><%= order.getDiscount() %></td>
             <td>
                 <ul>
                     <%

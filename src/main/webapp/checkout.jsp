@@ -27,8 +27,6 @@
                     row.querySelector('.item-total').innerText = '$0.00';
                 }
             });
-            const discount = parseFloat(document.getElementById('discount').value) || 0;
-            totalValue -= discount;
             document.getElementById('totalAmount').value = totalValue.toFixed(2);
         }
     </script>
@@ -119,10 +117,10 @@
             <label for="orderDate" class="form-label">Order Date</label>
             <input type="date" class="form-control" id="orderDate" name="orderDate" required>
         </div>
-        <div class="mb-3">
-            <label for="discount" class="form-label">Discount</label>
-            <input type="number" class="form-control" id="discount" name="discount" value="0" oninput="updateTotal()">
-        </div>
+<%--        <div class="mb-3">--%>
+<%--            <label for="discount" class="form-label">Discount</label>--%>
+<%--            <input type="number" class="form-control" id="discount" name="discount" value="0" oninput="updateTotal()">--%>
+<%--        </div>--%>
         <div class="mb-3">
             <label for="totalAmount" class="form-label">Total Amount</label>
             <input type="text" class="form-control" id="totalAmount" name="totalAmount" value="<%= totalValue %>" readonly>
