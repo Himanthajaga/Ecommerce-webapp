@@ -26,7 +26,7 @@ This is a fully functional e-commerce web application built using Java EE and JS
 ## Installation Guide
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/ecommerce-app.git
+   git clone https://github.com/Himanthajaga/Ecommerce-webapp
    import the project into your IDE.
    ```
 2. Set up the MySQL database:
@@ -81,7 +81,7 @@ This is a fully functional e-commerce web application built using Java EE and JS
 
 ---
 ##Demo Video
-[![Demo Video](src/main/webapp/ScreenShots/demo.PNG)](https://www.youtube.com/watch?v=3QX2ZvJ1Z1A)
+[![Demo Video](src/main/webapp/Assests/Ecommerce-Cover.jpg)](https://youtu.be/u_3rO_w81uA?si=yrFNY1ygFEXkh__q)
 
 ---
 ##Future enhancements
